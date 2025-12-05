@@ -1,0 +1,60 @@
+body{
+    background-color: peru;
+}
+.nav{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.flexBox{
+    display: flex;
+}
+.inlineBox{
+    display: inline;
+}
+.gridBox{
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+.shelfReviewBox{
+    display: flex;
+}
+.shelfBox{
+    flex: 1 0 250px;
+}
+.smallShelf, .shelf{
+    display: flex;
+    flex-wrap: wrap;
+}
+.smallShelf img{
+    height: 100px;
+}
+.reviewBox{
+    flex: .2 0 300px;
+}
+.bookOnShelf{
+    text-align: center;
+}
+.bookOnShelf img{
+    height: 100px;
+}
+img.starBook{
+    height: 400px;
+}
+img{
+    height: 100px;
+}
+a.linkBox{
+    color: inherit;
+    text-decoration: inherit;
+}
+.searchResultInfo{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    margin: 10px;
+    column-gap: 20px;
+}

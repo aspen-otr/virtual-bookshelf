@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <ul class="nav">
+        <li><a href="./profile.html">Home</a></li>
+        <li>
+            <form action="./search.html">
+                <input type="text" id="search" name="search" placeholder="Search books">
+                <input type="submit" id="submit" name="submit" value="Search" hidden>
+            </form>
+        </li>
+    </ul>
+    <h2>Results</h2>
+    <div>
+        <div class="flexBox">
+            <a href="./book.html"><img class="bookOnShelf" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image"></a>
+            <div class="searchResultInfo">
+                <div id="title"><i>Title</i> by Last Name, First Name</div>
+                <div id="rating">Rating: </div>
+                <div id="genres">Genres: </div>
+                <div id="ISBN">ISBN: </div>
+                <div id="link">Goodreads link: </div>
+            </div>
+            <div class="searchResultInfo">
+                <input type="button" id="addToShelfBtn" name="addToShelfBtn" value="Add to:">
+                <select id="addToShelfSelectBtn" name="addToShelfSelectBtn">
+                <option value="Liked">Liked</option>
+                <option value="Other">Other</option>
+                <script>
+                    document.getElementById("addToShelfBtn").addEventListener("click", function(e){
+                        alert("Added to shelf");
+                    });
+                </script>
+                <input type="button" id="reviewBtn" name="reviewBtn" value="Review">
+                <script>
+                    document.getElementById("reviewBtn").addEventListener("click", function(e){
+                        document.location = "./addReview.html";
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="flexBox">
+            <a href="./book.html"><img class="bookOnShelf" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image"></a>
+            <div class="searchResultInfo">
+                <div id="title"><i>Title</i> by Last Name, First Name</div>
+                <div id="rating">Rating: </div>
+                <div id="genres">Genres: </div>
+                <div id="ISBN">ISBN: </div>
+                <div id="link">Goodreads link: </div>
+            </div>
+            <div class="searchResultInfo">
+                <input type="button" id="addToShelfBtn" name="addToShelfBtn" value="Add to:">
+                <select id="addToShelfSelectBtn" name="addToShelfSelectBtn">
+                <option value="Liked">Liked</option>
+                <option value="Other">Other</option>
+                <script>
+                    document.getElementById("addToShelfBtn").addEventListener("click", function(e){
+                        alert("Added to shelf");
+                    });
+                </script>
+                <input type="button" id="reviewBtn" name="reviewBtn" value="Review">
+                <script>
+                    document.getElementById("reviewBtn").addEventListener("click", function(e){
+                        document.location = "./addReview.html";
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="flexBox">
+            <a href="./book.html"><img class="bookOnShelf" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image"></a>
+            <div class="searchResultInfo">
+                <div id="title"><i>Title</i> by Last Name, First Name</div>
+                <div id="rating">Rating: </div>
+                <div id="genres">Genres: </div>
+                <div id="ISBN">ISBN: </div>
+                <div id="link">Goodreads link: </div>
+            </div>
+            <div class="searchResultInfo">
+                <input type="button" id="addToShelfBtn" name="addToShelfBtn" value="Add to:">
+                <select id="addToShelfSelectBtn" name="addToShelfSelectBtn">
+                <option value="Liked">Liked</option>
+                <option value="Other">Other</option>
+                <script>
+                    document.getElementById("addToShelfBtn").addEventListener("click", function(e){
+                        alert("Added to shelf");
+                    });
+                </script>
+                <input type="button" id="reviewBtn" name="reviewBtn" value="Review">
+                <script>
+                    document.getElementById("reviewBtn").addEventListener("click", function(e){
+                        document.location = "./addReview.html";
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

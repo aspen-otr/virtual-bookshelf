@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <ul class="nav">
+        <li><a href="./profile.html">Home</a></li>
+        <li>
+            <form action="./search.html">
+                <input type="text" id="search" name="search" placeholder="Search books">
+                <input type="submit" id="submit" name="submit" value="Search" hidden>
+            </form>
+        </li>
+    </ul>
+
+    <div class="flexBox">
+        <h3>Display name</h3>
+        <input type="button" id="editUserBtn" name="editUserBtn" value="Edit User Profile">
+        <script>
+            document.getElementById("editUserBtn").addEventListener("click", function(e){
+                document.location = "./editUser.html";
+            });
+        </script>
+        <input type="button" id="LogoutBtn" name="LogoutBtn" value="Logout">
+        <script>
+            document.getElementById("LogoutBtn").addEventListener("click", function(e){
+                document.location = "./index.html";
+            });
+        </script>
+    </div>
+    <div class="shelfReviewBox">
+        <div class="shelfBox">
+            <div class="flexBox">
+                <h4>Shelves</h4>
+                <input type="button" id="addShelfBtn" name="addShelfBtn" value="Add Shelf">
+                <script>
+                    document.getElementById("addShelfBtn").addEventListener("click", function(e){
+                        document.location = "./addShelf.html";
+                    });
+                </script>
+            </div>
+            <a href="shelf.html" class="linkBox">Shelf Name<div class="smallShelf">
+                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
+                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
+                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
+                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
+                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
+                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
+                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
+                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
+            </div></a>
+        </div>
+        <div id="reviewBox">
+            <h4>Reviews</h4>
+            <a href="./review.html" class="linkBox bookOnShelf"><div class="flexBox">
+                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
+                <div class="inlineBox">
+                    <p><i>Title</i> by Author</p>
+                    <p>rating, tagline</p>
+                    <p>content</p>
+                </div>
+            </div></a>
+            <a href="./review.html" class="linkBox bookOnShelf"><div class="flexBox">
+                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
+                <div class="inlineBox">
+                    <p><i>Title</i> by Author</p>
+                    <p>rating, tagline</p>
+                    <p>content</p>
+                </div>
+            </div></a>
+        </div>
+    </div>
+</body>
+</html>

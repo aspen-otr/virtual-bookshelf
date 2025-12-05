@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <ul class="nav">
+        <li><a href="./profile.html">Home</a></li>
+        <li>
+            <form action="./search.html">
+                <input type="text" id="search" name="search" placeholder="Search books">
+                <input type="submit" id="submit" name="submit" value="Search" hidden>
+            </form>
+        </li>
+    </ul>
+
+    <div class="flexBox">
+        <h3>Review</h3>
+        <input type="button" id="editReviewBtn" name="editReviewBtn" value="Edit Review">
+        <script>
+            document.getElementById("editReviewBtn").addEventListener("click", function(e){
+                document.location = "./editReview.html";
+            });
+        </script>
+        <input type="button" id="DeleteReviewBtn" name="DeleteReviewBtn" value="Delete Review">
+        <script>
+            document.getElementById("DeleteReviewBtn").addEventListener("click", function(e){
+                document.location = "./profile.html";
+            });
+        </script>
+    </div>
+    <div class="flexBox">
+        <a href="./book.html"><img class="starBook" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image"></a>
+        <div class="inlineBox">
+            <p><i>Title</i> by Author</p>
+            <p>rating, tagline</p>
+            <p>content</p>
+        </div>
+    </div>
+
+    <a href="javascript:history.back()">Go back</a>
+</body>
+</html>
