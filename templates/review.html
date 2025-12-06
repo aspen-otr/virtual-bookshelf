@@ -8,9 +8,9 @@
 </head>
 <body>
     <ul class="nav">
-        <li><a href="./profile.html">Home</a></li>
+        <li><a href="/profile">Home</a></li>
         <li>
-            <form action="./search.html">
+            <form action="/search">
                 <input type="text" id="search" name="search" placeholder="Search books">
                 <input type="submit" id="submit" name="submit" value="Search" hidden>
             </form>
@@ -22,18 +22,18 @@
         <input type="button" id="editReviewBtn" name="editReviewBtn" value="Edit Review">
         <script>
             document.getElementById("editReviewBtn").addEventListener("click", function(e){
-                document.location = "./editReview.html";
+                document.location = "/editReview";
             });
         </script>
         <input type="button" id="DeleteReviewBtn" name="DeleteReviewBtn" value="Delete Review">
         <script>
             document.getElementById("DeleteReviewBtn").addEventListener("click", function(e){
-                document.location = "./profile.html";
+                document.location = "/profile";
             });
         </script>
     </div>
     <div class="flexBox">
-        <a href="./book.html"><img class="starBook" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image"></a>
+        <a href="/book"><img class="starBook" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image"></a>
         <div class="inlineBox">
             <p><i>Title</i> by Author</p>
             <p>rating, tagline</p>
