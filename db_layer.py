@@ -90,9 +90,9 @@ def reviews_by_with_books(username):
 
 def search_books(terms):
     if terms is None or len(terms) == 0:
-        return None
-    if len(terms) == 10 and terms.isdigit():
-        return book_info(terms)
+        return title_search("")
+    if is_isbn(terms):
+        return [book_info(terms)]
     split = terms.split(":", 1)
     if len(split) == 1 or len(split[1]) == 0:
         return title_search(split[0])
@@ -117,17 +117,17 @@ def search_books(terms):
 
 def title_search(title):
     with db_cur() as cur:
-        cur.execute("SELECT * FROM Book WHERE title LIKE '%?%'", (title,))
+        cur.execute("SELECT * FROM Book WHERE title LIKE CONCAT('%', ?, '%')", (title,))
         return list(cur.fetchall())
 
 def author_search(author):
     with db_cur() as cur:
-        cur.execute("SELECT * FROM Book WHERE author LIKE '%?%'", (author,))
+        cur.execute("SELECT * FROM Book WHERE author LIKE CONCAT('%', ?, '%')", (author,))
         return list(cur.fetchall())
 
 def genre_search(genre):
     with db_cur() as cur:
-        cur.execute("SELECT * FROM Book WHERE genre LIKE '%?%'", (genre,))
+        cur.execute("SELECT * FROM Book WHERE genre LIKE CONCAT('%', ?, '%')", (genre,))
         return list(cur.fetchall())
 
 def rating_search(low, high):
@@ -211,3 +211,6 @@ def hash_password(plaintext):
 def auth_user(username, plaintext_password):
     u = user_info(username)
     return u is not None and u["hashed_password"] == hash_password(plaintext_password)
+
+def is_isbn(string):
+    return len(string) == 10 and (string.isdigit() or (string[:9].isdigit() and string[9] == 'X'))
