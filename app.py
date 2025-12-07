@@ -94,7 +94,6 @@ def create_shelf_page():
             db_layer.create_shelf(name, desc, u)
     return flask.render_template("addShelf.html")
 
-
 @app.route("/profile")
 def default_profile():
     if u := logged_in():
@@ -105,9 +104,15 @@ def default_profile():
 def book_page(isbn):
     genres = db_layer.book_info(isbn)["genre"].split(",")
     first_two_genres = ", ".join(genres[:2])
+    u = logged_in()
+    reviews = db_layer.reviews_for(isbn)
+    can_review = True
+    if not u or [review for review in reviews if review["username"] == u]:
+        can_review = False
     return flask.render_template("book.html",
                                  book = db_layer.book_info(isbn),
-                                 reviews = db_layer.reviews_for(isbn),
+                                 reviews = reviews,
+                                 can_review = can_review,
                                  genres = first_two_genres)
 
 @app.route("/shelf/<int:shelf_id>")
@@ -127,6 +132,27 @@ def profile_page(username):
                                  currently_logged_in = logged_in() == username,
                                  reviews = db_layer.reviews_by_with_books(username),
                                  shelves = db_layer.shelves_owned_by_with_books(username))
+
+@app.route("/addReview", methods = ["GET", "POST"])
+def add_review_page():
+    user = logged_in()
+    isbn = request.args.get("isbn")
+    print("addReview:", request.method, user, isbn)
+    if not isbn:
+        return flask.redirect("/profile")
+    if not user:
+        return flask.redirect(f"/book/{isbn}")
+    if request.method == "POST":
+        tagline = request.form["tagline"]
+        content = request.form["content"]
+        rating = request.form["rating"]
+        db_layer.add_review(isbn, user, tagline, content, rating)
+        return flask.redirect(f"/book/{isbn}")
+
+    book = db_layer.book_info(isbn)
+    return flask.render_template("addReview.html",
+                                 user = user,
+                                 book = book)
 
 if __name__ == "__main__":
     app.run(debug = True)

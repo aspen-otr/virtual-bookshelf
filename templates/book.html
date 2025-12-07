@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
     <ul class="nav">
@@ -18,7 +18,7 @@
     </ul>
     <h2>Book Details</h2>
     <div class="flexBox">
-        <img class="starBook" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
+        <img class="starBook" src="{{book.img}}" alt="Book Cover Image">
         <div>
             <p><i>{{ book.title }}</i></p>
             <p>By {{ book.author }}</p>
@@ -28,12 +28,20 @@
             <p>Goodreads link: {{ book.link }}</p>
         </div>
     </div>
+	{% if can_review %}
+		<button id="addReviewBtn">Write Review</button>
+		<script>
+		  document.getElementById("addReviewBtn").addEventListener("click", function(_) {
+			  document.location = "/addReview?isbn={{book.isbn}}";
+		  });
+		</script>
+	{% endif %}
 	{% for review in reviews %}
-	<div class="flexBox">
-	  <h4>{{ review.tagline }}</h4>
-	  <p>By {{ review.username }} ({{ review.rating }})</p>
-	  <p>{{ review.content }}</p>
-	</div>
+		<div class="flexBox">
+		<h4>{{ review.tagline }}</h4>
+		<p>By {{ review.username }} ({{ review.rating }})</p>
+		<p>{{ review.content }}</p>
+		</div>
 	{% endfor %}
     <p><a href="javascript:history.back()">Go back</a></p>
 </body>

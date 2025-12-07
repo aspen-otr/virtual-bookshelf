@@ -184,6 +184,11 @@ def delete_user(username):
         delete_shelf(shelf["id"])
     cur.execute("DELETE FROM Review WHERE username = ?", (username,))
 
+def add_review(isbn, username, tagline, content, rating):
+    with db_cur() as cur:
+        cur.execute("INSERT INTO Review (isbn, username, tagline, content, rating) VALUES (?, ?, ?, ?, ?)",
+                    (isbn, username, tagline, content, rating))
+
 # Extraneous utilities
 def hash_password(plaintext):
     return sha1(bytes(plaintext, "utf8")).hexdigest()

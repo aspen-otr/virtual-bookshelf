@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Review</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
     <ul class="nav">
@@ -16,16 +16,17 @@
             </form>
         </li>
     </ul>
-    <h2>Add Review</h2>
+    <h2>Write Review for {{book.title}}</h2>
     <div class="flexBox">
-        <a href="/book"><img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image"></a>
+        <a href="/book/{{book.isbn}}"><img src="{{book.img}}" alt="Book Cover Image"></a>
         <div class="inlineBox">
-            <p><i>Title</i> by Author</p>
-            <form action="/review">
+            <p><i>{{book.title}}</i> by {{book.author}}</p>
+            <form action="/addReview?isbn={{book.isbn}}" method="post">
                 <label for="rating">Rating: </label>
-                <input type="number" id="rating" name="rating" min="0" max="5" required><br>
-                <textarea id="tagLine" name="tagLine" placeholder="Enter tag line here" maxlength="300" rows="2" cols="30" required></textarea><br>
-                <textarea id="content" name="content" placeholder="Enter the content of the review here" maxlength="8096" rows="10" cols="30" required></textarea>
+                <input type="number" step="0.5" id="rating" name="rating" min="0" max="5" required><br>
+                <textarea id="tagline" name="tagline" placeholder="Enter tagline here" maxlength="300" rows="2" cols="30" required></textarea><br>
+                <textarea id="content" name="content" placeholder="Enter the content of the review here" maxlength="4096" rows="10" cols="30" required></textarea>
+				<input type="submit" id="submit" name="submit">
             </form>
         </div>
     </div>
