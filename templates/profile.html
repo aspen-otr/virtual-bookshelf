@@ -31,6 +31,12 @@
                 document.location = "/?logout=1"; // XXX: DOES THIS WORK??
             });
         </script>
+        <input type="button" id="DeleteAcctBtn" name="DeleteAcctBtn" value="Delete Account">
+        <script>
+            document.getElementById("DeleteAcctBtn").addEventListener("click", function(e){
+                document.location = "/?deleteaccount=1";
+            });
+        </script>
     </div>
     <div class="shelfReviewBox">
         <div class="shelfBox">

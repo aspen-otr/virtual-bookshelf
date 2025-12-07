@@ -34,6 +34,10 @@ def default_route():
     resp = make_response(flask.render_template("index.html"))
     if request.args.get("logout") is not None:
         resp.set_cookie("user", expires = 0)
+    elif request.args.get("deleteaccount") is not None:
+        if user := logged_in():
+            db_layer.delete_user(user)
+            resp.set_cookie("user", expires = 0)
     return resp
 
 @app.route("/login", methods = ["GET", "POST"])
@@ -92,6 +96,7 @@ def create_shelf_page():
             name = request.form["shelfName"]
             desc = request.form["shelfDescription"]
             db_layer.create_shelf(name, desc, u)
+            return flask.redirect("/profile")
     return flask.render_template("addShelf.html")
 
 @app.route("/profile")

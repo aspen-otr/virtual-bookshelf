@@ -182,7 +182,9 @@ def delete_shelf(shelf_id):
 def delete_user(username):
     for shelf in shelves_owned_by(username):
         delete_shelf(shelf["id"])
-    cur.execute("DELETE FROM Review WHERE username = ?", (username,))
+    with db_cur() as cur:
+        cur.execute("DELETE FROM Review WHERE username = ?", (username,))
+        cur.execute("DELETE FROM User WHERE username = ?", (username,))
 
 def add_review(isbn, username, tagline, content, rating):
     with db_cur() as cur:
