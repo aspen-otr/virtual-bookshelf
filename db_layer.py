@@ -166,7 +166,7 @@ def register_user(username, display_name, password):
     with db_cur() as cur:
         pw = hash_password(password)
         cur.execute("INSERT INTO User (username, display_name, hashed_password) VALUES (?, ?, ?)", (username, display_name, pw))
-        create_shelf("Liked Books", None, username)
+    create_shelf("Liked Books", None, username)
     return username
 
 def delete_shelf(shelf_id):
