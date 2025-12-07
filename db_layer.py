@@ -19,6 +19,8 @@ def db_cur(**kwargs): # Supply with db_cur(conf = { ... })
         yield cur
     finally:
         cur.close()
+        conn.commit()
+        conn.close()
 
 def db_exec(func, *args, **kwargs):
     res = None
@@ -49,14 +51,19 @@ def shelves_owned_by(username):
 def add_book_to_shelf(isbn, shelf_id):
     with db_cur() as cur:
         cur.execute("INSERT INTO OnShelf (id, isbn) VALUES (?, ?)", (shelf_id, isbn))
-        cur.commit()
 
 def create_shelf(name, description): # Returns shelf ID
     with db_cur() as cur:
         cur.execute("INSERT INTO Shelf (shelf_name, shelf_desc) VALUES (?, ?)", (name, description))
-        cur.commit()
-        cur.execute("SELECT max(id) FROM Shelf")
-        return cur.fetchone()
+        return cur.lastrowid
+
+def register_user(username, display_name, password):
+    if user_info(username) is not None:
+        return None
+    with db_cur() as cur:
+        pw = hash_password(password)
+        cur.execute("INSERT INTO User (username, display_name, hashed_password) VALUES (?, ?, ?)", (username, display_name, pw))
+    return username
 
 # Extraneous utilities
 def hash_password(plaintext):
