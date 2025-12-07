@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
     <ul class="nav">
@@ -18,87 +18,40 @@
     </ul>
     <h2>Results</h2>
     <div>
-        <div class="flexBox">
-            <a href="/book"><img class="bookOnShelf" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image"></a>
-            <div class="searchResultInfo">
-                <div id="title"><i>Title</i> by Last Name, First Name</div>
-                <div id="rating">Rating: </div>
-                <div id="genres">Genres: </div>
-                <div id="ISBN">ISBN: </div>
-                <div id="link">Goodreads link: </div>
-            </div>
-            <div class="searchResultInfo">
-                <input type="button" id="addToShelfBtn" name="addToShelfBtn" value="Add to:">
-                <select id="addToShelfSelectBtn" name="addToShelfSelectBtn">
-                <option value="Liked">Liked</option>
-                <option value="Other">Other</option>
-                <script>
-                    document.getElementById("addToShelfBtn").addEventListener("click", function(e){
-                        alert("Added to shelf");
-                    });
-                </script>
-                <input type="button" id="reviewBtn" name="reviewBtn" value="Review">
-                <script>
-                    document.getElementById("reviewBtn").addEventListener("click", function(e){
-                        document.location = "/addReview";
-                    });
-                </script>
-            </div>
-        </div>
-        <div class="flexBox">
-            <a href="/book"><img class="bookOnShelf" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image"></a>
-            <div class="searchResultInfo">
-                <div id="title"><i>Title</i> by Last Name, First Name</div>
-                <div id="rating">Rating: </div>
-                <div id="genres">Genres: </div>
-                <div id="ISBN">ISBN: </div>
-                <div id="link">Goodreads link: </div>
-            </div>
-            <div class="searchResultInfo">
-                <input type="button" id="addToShelfBtn" name="addToShelfBtn" value="Add to:">
-                <select id="addToShelfSelectBtn" name="addToShelfSelectBtn">
-                <option value="Liked">Liked</option>
-                <option value="Other">Other</option>
-                <script>
-                    document.getElementById("addToShelfBtn").addEventListener("click", function(e){
-                        alert("Added to shelf");
-                    });
-                </script>
-                <input type="button" id="reviewBtn" name="reviewBtn" value="Review">
-                <script>
-                    document.getElementById("reviewBtn").addEventListener("click", function(e){
-                        document.location = "/addReview";
-                    });
-                </script>
-            </div>
-        </div>
-        <div class="flexBox">
-            <a href="/book"><img class="bookOnShelf" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image"></a>
-            <div class="searchResultInfo">
-                <div id="title"><i>Title</i> by Last Name, First Name</div>
-                <div id="rating">Rating: </div>
-                <div id="genres">Genres: </div>
-                <div id="ISBN">ISBN: </div>
-                <div id="link">Goodreads link: </div>
-            </div>
-            <div class="searchResultInfo">
-                <input type="button" id="addToShelfBtn" name="addToShelfBtn" value="Add to:">
-                <select id="addToShelfSelectBtn" name="addToShelfSelectBtn">
-                <option value="Liked">Liked</option>
-                <option value="Other">Other</option>
-                <script>
-                    document.getElementById("addToShelfBtn").addEventListener("click", function(e){
-                        alert("Added to shelf");
-                    });
-                </script>
-                <input type="button" id="reviewBtn" name="reviewBtn" value="Review">
-                <script>
-                    document.getElementById("reviewBtn").addEventListener("click", function(e){
-                        document.location = "/addReview";
-                    });
-                </script>
-            </div>
-        </div>
+	  {% if search_results %}
+		{% for result in search_results %}
+			<div class="flexBox">
+				<a href="/book/{{result.isbn}}"><img class="bookOnShelf" src="{{result.img}}" alt="Book Cover Image"></a>
+				<div class="searchResultInfo">
+					<div id="title"><i>{{ result.title }}</i> by {{ result.author }}</div>
+					<div id="rating">Rating: {{ result.rating }}</div>
+					<div id="genres">Genres: {{ result.genre }}</div>
+					<div id="ISBN">ISBN: {{ result.isbn }}</div>
+					<div id="link">Goodreads link: {{ result.link }}</div>
+				</div>
+				<div class="searchResultInfo">
+					<input type="button" id="addToShelfBtn" name="addToShelfBtn" value="Add to:">
+					<select id="addToShelfSelectBtn{{ result.isbn }}" name="addToShelfSelectBtn">
+					{% for shelf in user_shelves %}
+						<option value="{{ shelf.id }}">{{ shelf.name }} - {{ shelf.desc }}</option>
+					{% endfor %}
+					</select>
+					<script>
+						document.getElementById("addToShelfBtn").addEventListener("click", function(e){
+							fetch("http://localhost:5000/addToShelf/{{ shelf.id }}/{{ result.isbn }}",
+								  { method: "POST" }).then(() => null);
+						});
+					</script>
+					<input type="button" id="reviewBtn" name="reviewBtn" value="Review">
+					<script>
+						document.getElementById("reviewBtn").addEventListener("click", function(e){
+							document.location = "/addReview?isbn={{ result.isbn }}";
+						});
+					</script>
+				</div>
+			</div>
+		{% endfor %}
+	{% endif %}
     </div>
 </body>
 </html>

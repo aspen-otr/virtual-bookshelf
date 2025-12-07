@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Shelf</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
     <ul class="nav">
@@ -17,11 +17,11 @@
         </li>
     </ul>
     <h2>Add Shelf</h2>
-    <form action="/profile">
+    <form action="/addShelf" method="post">
         <input type="text" id="shelfName" name="shelfName" placeholder="Enter shelf name here" maxlength="50" required><br>
-        <textarea id="shelfDescription" name="shelfDescription" placeholder="Enter description here" maxlength="40" rows="3" cols="30"></textarea>
+        <textarea id="shelfDescription" name="shelfDescription" placeholder="Enter description here" maxlength="300" rows="3" cols="30"></textarea>
         <input type="submit" id="submit" name="submit">
     </form>
-    <a href="javascript:history.back()">Cancel</a>
+    <a href="/profile">Cancel</a>
 </body>
 </html>

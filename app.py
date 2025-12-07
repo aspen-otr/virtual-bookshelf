@@ -4,7 +4,7 @@ from flask import Flask, request, make_response, redirect
 
 import db_layer
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder = "/")
 
 # Magic numbers I guess (HTTP response codes mostly?/)
 KEEP_HTTP_METHOD = 307
@@ -12,6 +12,12 @@ KEEP_HTTP_METHOD = 307
 def logged_in():
     return request.cookies.get("user")
 
+# Requests that ARE NOT pages
+@app.route("/addToShelf/<int:shelf_id>/<isbn>", methods = ["POST"])
+def add_to_shelf(shelf_id, isbn):
+    db_layer.add_book_to_shelf(isbn, shelf_id)
+
+# Requests that ARE pages
 @app.route("/")
 def default_route():
     resp = make_response(flask.render_template("index.html"))
@@ -21,6 +27,9 @@ def default_route():
 
 @app.route("/login", methods = ["GET", "POST"])
 def login_page():
+    if u := logged_in(): # Auto log in
+        return flask.redirect(f"/profile/{u}")
+
     # POST: Log user into their /profile/<username>
     user = request.args.get("username")
     pw = request.args.get("password")
@@ -50,12 +59,52 @@ def register_page():
             return flask.render_template("register.html")
         return flask.redirect(f"/login?username={uname}&password={p1}")
     else:
-        assert request.method == "GET"
         return flask.render_template("register.html")
+
+@app.route("/search")
+def search_page():
+    terms = request.args.get("search")
+    u = logged_in()
+    if terms is None:
+        if u:
+            return flask.redirect(f"/profile/{u}")
+        return flask.redirect("/login")
+    results = db_layer.search_books(terms)
+    return flask.render_template("search.html",
+                                 search_results = results,
+                                 user_shelves = db_layer.shelves_owned_by(u))
+
+@app.route("/addShelf", methods = ["GET", "POST"])
+def create_shelf_page():
+    if request.method == "POST":
+        if u := logged_in():
+            name = request.form["shelfName"]
+            desc = request.form["shelfDescription"]
+            db_layer.create_shelf(name, desc, u)
+    return flask.render_template("addShelf.html")
+
+
+@app.route("/profile")
+def default_profile():
+    if u := logged_in():
+        return flask.redirect(f"/profile/{u}")
+    return flask.redirect("/login")
+
+@app.route("/book/<isbn>")
+def book_page(isbn):
+    return flask.abort(500)
+
+@app.route("/shelf/<int:shelf_id>")
+def shelf_page(shelf_id):
+    return flask.abort(500)
 
 @app.route("/profile/<username>")
 def profile_page(username):
-    return flask.render_template("profile.html")
+    return flask.render_template("profile.html",
+                                 user = db_layer.user_info(username),
+                                 currently_logged_in = logged_in() == username,
+                                 reviews = db_layer.reviews_by(username),
+                                 shelves = db_layer.shelves_owned_by(username))
 
 if __name__ == "__main__":
     app.run(debug = True)
