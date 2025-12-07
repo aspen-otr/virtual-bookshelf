@@ -1,0 +1,62 @@
+DROP DATABASE IF EXISTS cs366;
+CREATE DATABASE cs366;
+
+-- Put usernames to grant perms for
+GRANT ALL PRIVILEGES ON cs366.* to 'aspen'@'localhost';
+
+USE cs366;
+
+DROP TABLE IF EXISTS User;
+DROP TABLE IF EXISTS Shelf;
+DROP TABLE IF EXISTS Own;
+DROP TABLE IF EXISTS OnShelf;
+DROP TABLE IF EXISTS Review;
+DROP TABLE IF EXISTS Book;
+
+CREATE TABLE IF NOT EXISTS User (
+	username VARCHAR(20) PRIMARY KEY,
+	display_name VARCHAR(40) NOT NULL,
+	hashed_password VARCHAR(40) NOT NULL,
+	CONSTRAINT CON_User CHECK (LENGTH(username) > 0
+		AND LENGTH(display_name) > 0)
+);
+
+CREATE TABLE IF NOT EXISTS Shelf (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	name VARCHAR(50) NOT NULL,
+	`desc` VARCHAR(300),
+	CONSTRAINT CON_Shelf CHECK (LENGTH(name) > 0)
+);
+
+CREATE TABLE IF NOT EXISTS Own (
+	id INT,
+	username VARCHAR(20),
+	PRIMARY KEY (id, username)
+);
+
+CREATE TABLE IF NOT EXISTS OnShelf (
+	id INT,
+	isbn VARCHAR(10),
+	PRIMARY KEY (id, isbn)
+);
+
+CREATE TABLE IF NOT EXISTS Review (
+	isbn VARCHAR(10),
+	username VARCHAR(20),
+	tagline VARCHAR(300),
+	content VARCHAR(4096),
+	rating FLOAT,
+	PRIMARY KEY (isbn, username)
+);
+
+CREATE TABLE IF NOT EXISTS Book (
+	isbn VARCHAR(10) PRIMARY KEY,
+	author VARCHAR(250),
+	synopsis VARCHAR(1000),
+	genre VARCHAR(1000),
+	img VARCHAR(500),
+	link VARCHAR(300),
+	rating FLOAT,
+	totalratings INT,
+	title VARCHAR(300)
+);

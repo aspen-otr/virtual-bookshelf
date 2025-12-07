@@ -1,0 +1,2 @@
+DELETE FROM Book WHERE LENGTH(isbn) != 10; 
+DELETE FROM Book WHERE isbn REGEXP '[^0-9X]';
