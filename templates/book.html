@@ -20,14 +20,21 @@
     <div class="flexBox">
         <img class="starBook" src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
         <div>
-            <p><i>Title</i></p>
-            <p>By Last Name, First Name</p>
-            <p>Rating: </p>
-            <p>Genres: </p>
-            <p>ISBN: </p>
-            <p>Goodreads link: </p>
+            <p><i>{{ book.title }}</i></p>
+            <p>By {{ book.author }}</p>
+            <p>Rating: {{ book.rating }}</p>
+            <p>Genres: {{ genres }}</p>
+            <p>ISBN: {{ book.isbn }}</p>
+            <p>Goodreads link: {{ book.link }}</p>
         </div>
     </div>
+	{% for review in reviews %}
+	<div class="flexBox">
+	  <h4>{{ review.tagline }}</h4>
+	  <p>By {{ review.username }} ({{ review.rating }})</p>
+	  <p>{{ review.content }}</p>
+	</div>
+	{% endfor %}
     <p><a href="javascript:history.back()">Go back</a></p>
 </body>
 </html>

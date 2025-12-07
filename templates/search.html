@@ -30,21 +30,22 @@
 					<div id="link">Goodreads link: {{ result.link }}</div>
 				</div>
 				<div class="searchResultInfo">
-					<input type="button" id="addToShelfBtn" name="addToShelfBtn" value="Add to:">
-					<select id="addToShelfSelectBtn{{ result.isbn }}" name="addToShelfSelectBtn">
+					<input type="button" id="addToShelfBtn{{result.isbn}}" name="addToShelfBtn" value="Add to:">
+					<select id="addToShelfSelectBtn{{result.isbn}}" name="addToShelfSelectBtn">
 					{% for shelf in user_shelves %}
-						<option value="{{ shelf.id }}">{{ shelf.name }} - {{ shelf.desc }}</option>
+						<option value="{{ shelf.id }}">{{ shelf.name }}</option>
 					{% endfor %}
 					</select>
 					<script>
-						document.getElementById("addToShelfBtn").addEventListener("click", function(e){
-							fetch("http://localhost:5000/addToShelf/{{ shelf.id }}/{{ result.isbn }}",
+						document.getElementById("addToShelfBtn{{result.isbn}}").addEventListener("click", function(e){
+							const shelf_id = document.getElementById("addToShelfSelectBtn{{ result.isbn }}").value;
+							fetch(`/addToShelf/${shelf_id}/{{result.isbn}}`,
 								  { method: "POST" }).then(() => null);
 						});
 					</script>
-					<input type="button" id="reviewBtn" name="reviewBtn" value="Review">
+					<input type="button" id="reviewBtn{{result.isbn}}" name="reviewBtn" value="Review">
 					<script>
-						document.getElementById("reviewBtn").addEventListener("click", function(e){
+						document.getElementById("reviewBtn{{result.isbn}}").addEventListener("click", function(e){
 							document.location = "/addReview?isbn={{ result.isbn }}";
 						});
 					</script>

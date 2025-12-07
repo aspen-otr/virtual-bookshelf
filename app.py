@@ -17,6 +17,11 @@ def logged_in():
 def add_to_shelf(shelf_id, isbn):
     db_layer.add_book_to_shelf(isbn, shelf_id)
 
+@app.route("/deleteShelf/<int:shelf_id>", methods = ["POST"])
+def delete_shelf(shelf_id):
+    print(f"Deleting shelf {shelf_id}")
+    db_layer.delete_shelf(shelf_id)
+
 # Requests that ARE pages
 @app.route("/")
 def default_route():
@@ -92,19 +97,30 @@ def default_profile():
 
 @app.route("/book/<isbn>")
 def book_page(isbn):
-    return flask.abort(500)
+    genres = db_layer.book_info(isbn)["genre"].split(",")
+    first_two_genres = ", ".join(genres[:2])
+    return flask.render_template("book.html",
+                                 book = db_layer.book_info(isbn),
+                                 reviews = db_layer.reviews_for(isbn),
+                                 genres = first_two_genres)
 
 @app.route("/shelf/<int:shelf_id>")
 def shelf_page(shelf_id):
-    return flask.abort(500)
+    shelf = db_layer.shelf_info(shelf_id)
+    owner = db_layer.user_info(shelf["username"])
+    return flask.render_template("shelf.html",
+                                 owner = owner,
+                                 shelf = shelf,
+                                 books = db_layer.books_on_shelf(shelf_id),
+                                 current_user = logged_in())
 
 @app.route("/profile/<username>")
 def profile_page(username):
     return flask.render_template("profile.html",
                                  user = db_layer.user_info(username),
                                  currently_logged_in = logged_in() == username,
-                                 reviews = db_layer.reviews_by(username),
-                                 shelves = db_layer.shelves_owned_by(username))
+                                 reviews = db_layer.reviews_by_with_books(username),
+                                 shelves = db_layer.shelves_owned_by_with_books(username))
 
 if __name__ == "__main__":
     app.run(debug = True)

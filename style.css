@@ -1,5 +1,5 @@
 body{
-    background-color: peru;
+    background-color: cornsilk;
 }
 .nav{
   list-style-type: none;
@@ -11,6 +11,7 @@ body{
 
 .flexBox{
     display: flex;
+	padding: 20px;
 }
 .inlineBox{
     display: inline;

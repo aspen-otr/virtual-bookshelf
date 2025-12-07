@@ -18,7 +18,7 @@
     </ul>
 
     <div class="flexBox">
-        <h3>Display name</h3>
+        <h3>{{ user.display_name }}</h3>
         <input type="button" id="editUserBtn" name="editUserBtn" value="Edit User Profile">
         <script>
             document.getElementById("editUserBtn").addEventListener("click", function(e){
@@ -43,35 +43,28 @@
                     });
                 </script>
             </div>
-            <a href="/shelf" class="linkBox">Shelf Name<div class="smallShelf">
-                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
-                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
-                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
-                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
-                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
-                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
-                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
-                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
+			{% for shelf_cons in shelves %}
+            <a href="/shelf/{{ shelf_cons.shelf.id }}" class="linkBox">{{ shelf_cons.shelf.name }}<div class="smallShelf">
+				{% for book in shelf_cons.books[0:5] %}
+				<img src="{{book.img}}" alt="{{book.title}}">
+				{% endfor %}
             </div></a>
+			{% endfor %}
         </div>
         <div id="reviewBox">
             <h4>Reviews</h4>
-            <a href="/review" class="linkBox bookOnShelf"><div class="flexBox">
-                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
-                <div class="inlineBox">
-                    <p><i>Title</i> by Author</p>
-                    <p>rating, tagline</p>
-                    <p>content</p>
-                </div>
-            </div></a>
-            <a href="/review" class="linkBox bookOnShelf"><div class="flexBox">
-                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387738765l/1001053.jpg" alt="Book Cover Image">
-                <div class="inlineBox">
-                    <p><i>Title</i> by Author</p>
-                    <p>rating, tagline</p>
-                    <p>content</p>
-                </div>
-            </div></a>
+			{% for review_cons in reviews[0:3] %}
+			{% set book = review_cons.book %}
+			{% set rev = review_cons.review %}
+				<a href="/review" class="linkBox bookOnShelf"><div class="flexBox">
+					<img src="{{book.img}}" alt="Book Cover Image">
+					<div class="inlineBox">
+						<p><i>{{ book.title }}</i> by {{ user.display_name }} ({{ rev.rating }})</p>
+						<p>{{ rev.tagline }}</p>
+						<p>{{ rev.content }}</p>
+					</div>
+				</div></a>
+			{% endfor %}
         </div>
     </div>
 </body>
