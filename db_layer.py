@@ -151,6 +151,10 @@ def add_book_to_shelf(isbn, shelf_id):
         if not (isbn, shelf_id) in cur.fetchall():
             cur.execute("INSERT INTO OnShelf (id, isbn) VALUES (?, ?)", (shelf_id, isbn))
 
+def remove_book_from_shelf(isbn, shelf_id):
+    with db_cur() as cur:
+        cur.execute("DELETE FROM OnShelf WHERE (isbn = ? AND id = ?)", (isbn, shelf_id))
+
 def create_shelf(name, description, owner): # Returns shelf ID
     if user_info(owner) is None:
         return -1

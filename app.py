@@ -1,6 +1,6 @@
 import json
 import flask
-from flask import Flask, request, make_response, redirect
+from flask import Flask, request, make_response, redirect, jsonify
 
 import db_layer
 
@@ -16,11 +16,17 @@ def logged_in():
 @app.route("/addToShelf/<int:shelf_id>/<isbn>", methods = ["POST"])
 def add_to_shelf(shelf_id, isbn):
     db_layer.add_book_to_shelf(isbn, shelf_id)
+    return jsonify(success = True)
+
+@app.route("/removeFromShelf/<int:shelf_id>/<isbn>", methods = ["POST"])
+def remove_from_shelf(shelf_id, isbn):
+    db_layer.remove_book_from_shelf(isbn, shelf_id)
+    return jsonify(success = True)
 
 @app.route("/deleteShelf/<int:shelf_id>", methods = ["POST"])
 def delete_shelf(shelf_id):
-    print(f"Deleting shelf {shelf_id}")
     db_layer.delete_shelf(shelf_id)
+    return jsonify(success = True)
 
 # Requests that ARE pages
 @app.route("/")

@@ -23,7 +23,7 @@
 	<button id="delShelfBtn" type="button">Delete Shelf</button>
 	<script>
 	  document.getElementById("delShelfBtn").addEventListener("click", function(e) {
-		  fetch("http://localhost:5000/deleteShelf/{{shelf.id}}", { method: "POST" }).then(() => document.location = "/profile");
+		  fetch("/deleteShelf/{{shelf.id}}", { method: "POST" }).then(() => document.location = "/profile");
 	  });
 	</script>
 	{% endif %}
@@ -34,6 +34,14 @@
             <a href="/book/{{book.isbn}}"><img src="{{book.img}}" alt="{{book.title}}"></a>
             <p><i>{{book.title}}</i></p>
             <p>By {{book.author}}</p>
+			{% if owner.username == current_user|string() %}
+				<button id="delFromShelf{{book.isbn}}" type="button">Remove</button>
+				<script>
+				  document.getElementById("delFromShelf{{book.isbn}}").addEventListener("click", function(e) {
+					  fetch("/removeFromShelf/{{shelf.id}}/{{book.isbn}}", { method: "POST" }).then((res) => location.reload());
+				});
+				</script>
+			{% endif %}
         </div></a>
 		{% endfor %}
     </div>
