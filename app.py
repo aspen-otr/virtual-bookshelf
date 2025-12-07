@@ -117,9 +117,15 @@ def book_page(isbn):
     can_review = True
     if not u or [review for review in reviews if review["username"] == u]:
         can_review = False
+    if u:
+        shelves = db_layer.shelves_owned_by(u)
+    else:
+        shelves = []
     return flask.render_template("book.html",
                                  book = db_layer.book_info(isbn),
                                  reviews = reviews,
+                                 user_shelves = shelves,
+                                 has_shelves = len(shelves) > 0,
                                  can_review = can_review,
                                  genres = first_two_genres)
 

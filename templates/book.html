@@ -36,6 +36,21 @@
 		  });
 		</script>
 	{% endif %}
+	{% if has_shelves %}
+	<button id="addToShelfBtn">Add to Shelf</button>
+	<select id="addToShelfSelectBtn" name="addToShelfSelectBtn">
+	{% for shelf in user_shelves %}
+		<option value="{{ shelf.id }}">{{ shelf.name }}</option>
+	{% endfor %}
+	</select>
+	<script>
+		document.getElementById("addToShelfBtn").addEventListener("click", function(e){
+			const shelf_id = document.getElementById("addToShelfSelectBtn").value;
+			fetch(`/addToShelf/${shelf_id}/{{book.isbn}}`,
+					{ method: "POST" }).then(() => null);
+		});
+	</script>
+	{% endif %}
 	{% for review in reviews %}
 		<div class="flexBox">
 		<h4>{{ review.tagline }}</h4>
