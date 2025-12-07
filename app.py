@@ -154,5 +154,37 @@ def add_review_page():
                                  user = user,
                                  book = book)
 
+@app.route("/editUser", methods = ["GET", "POST"])
+def edit_user_page():
+    user = logged_in()
+    if not user:
+        return flask.redirect("/login")
+
+    info = db_layer.user_info(user)
+    if request.method == "GET":
+        return flask.render_template("editUser.html", user = info)
+
+    print(info)
+    uname = request.form["username"] or user
+    dname = request.form["displayName"] or info["display_name"]
+    p1 = request.form["password1"]
+    p2 = request.form["password2"]
+    check = request.form["check_pw"]
+
+    if not db_layer.auth_user(user, check):
+        return
+    if p1 != p2:
+        return
+
+    if db_layer.user_info(uname):
+        return
+
+    db_layer.update_user_info(user, uname, dname, p1 or None)
+    resp = make_response(flask.redirect("/profile"))
+    if user != uname:
+        resp.set_cookie("user", uname)
+
+    return resp
+
 if __name__ == "__main__":
     app.run(debug = True)

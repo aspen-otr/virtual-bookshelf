@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit User</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
     <ul class="nav">
@@ -17,11 +17,22 @@
         </li>
     </ul>
     <h2>Edit User</h2>
-    <form action="/profile">
-        <input type="text" id="username" name="username" placeholder="Current username" maxlength="20" required><br>
-        <input type="text" id="displayName" name="displayName" placeholder="Current display name" maxlength="40" required><br>
-        <input type="text" id="password1" name="password1" placeholder="Enter password here" required><br>
-        <input type="text" id="password2" name="password2" placeholder="Confirm password here" required><br>
+    <form action="/editUser" method="post">
+		<label for="username">Enter new username (or leave blank to keep):</label>
+        <input type="text" id="username" name="username" placeholder="{{user.username}}" maxlength="20"><br>
+
+		<label for="displayName">Enter new display name (or leave blank to keep):</label>
+        <input type="text" id="displayName" name="displayName" placeholder="{{user.display_name}}" maxlength="40"><br>
+
+		<label for="password1">Enter new password (or leave blank to keep):</label>
+        <input type="text" id="password1" name="password1" placeholder="Enter new password"><br>
+
+		<label for="password2">Confirm new password:</label>
+        <input type="text" id="password2" name="password2" placeholder="Confirm password"><br>
+
+		<label for="check_pw">Enter current password to save:</label>
+        <input type="text" id="check_pw" name="check_pw" placeholder="Enter password" required><br>
+
         <input type="submit" id="submit" name="submit">
     </form>
     <a href="javascript:history.back()">Cancel</a>

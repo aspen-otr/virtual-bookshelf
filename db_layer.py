@@ -189,6 +189,19 @@ def add_review(isbn, username, tagline, content, rating):
         cur.execute("INSERT INTO Review (isbn, username, tagline, content, rating) VALUES (?, ?, ?, ?, ?)",
                     (isbn, username, tagline, content, rating))
 
+def update_user_info(old_name, username, display_name, password):
+    if password is None:
+        password = user_info(old_name)["hashed_password"]
+    else:
+        password = hash_password(password)
+
+    with db_cur() as cur:
+        cur.execute("UPDATE User SET display_name = ?, hashed_password = ? WHERE username = ?", (display_name, password, old_name))
+        if old_name != username:
+            cur.execute("UPDATE User SET username = ? WHERE username = ?", (username, old_name))
+            cur.execute("UPDATE Review SET username = ? WHERE username = ?", (username, old_name))
+            cur.execute("UPDATE Own SET username = ? WHERE username = ?", (username, old_name))
+
 # Extraneous utilities
 def hash_password(plaintext):
     return sha1(bytes(plaintext, "utf8")).hexdigest()
