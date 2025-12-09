@@ -23,7 +23,7 @@
     {% endif %}
     <div class="shelf">
 	  {% for book in books %}
-        <a href="/book/{{book.isbn}}" class="linkBox"><div class="bookOnShelf">
+        <a href="/book/{{book.isbn}}" class="linkBox"><div class="bookOnShelf" style="max-width: 300px;">
             <a href="/book/{{book.isbn}}"><img src="{{book.img}}" alt="{{book.title}}"></a>
             <p><i>{{book.title}}</i></p>
             <p>By {{book.author}}</p>

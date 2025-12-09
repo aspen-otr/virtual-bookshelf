@@ -69,8 +69,12 @@ div{
     flex: 1 0 100px;
     max-width: 300px;
 }
-.smallShelf, .shelf{
+.smallShelf{
     display: flex;
+}
+.shelf{
+    display: flex;
+    flex-wrap: wrap;
 }
 .smallShelf img{
     width: 100px;
