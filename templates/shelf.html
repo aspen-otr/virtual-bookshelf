@@ -7,16 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-    <ul class="nav">
-        <li><a href="/profile">Home</a></li>
-        <li>
-            <form action="/search">
-                <input type="text" id="search" name="search" placeholder="Search books">
-                <input type="submit" id="submit" name="submit" value="Search" hidden>
-            </form>
-        </li>
-    </ul>
-
+    {% include "navbar.html" %}
     <h2>{{ shelf.name }}</h2>
 	<h3>By {{ owner.display_name }}</h3>
 	{% if owner.username == current_user|string() %}
@@ -27,10 +18,12 @@
 	  });
 	</script>
 	{% endif %}
-    <p>{{ shelf.desc }}</p>
+    {% if shelf.desc != "None" and shelf.desc %}
+        <p>{{ shelf.desc }}</p>
+    {% endif %}
     <div class="shelf">
 	  {% for book in books %}
-        <a href="/book/{{book.isbn}}" class="linkBox"><div class="bookOnShelf">
+        <a href="/book/{{book.isbn}}" class="linkBox"><div class="bookOnShelf" style="max-width: 300px;">
             <a href="/book/{{book.isbn}}"><img src="{{book.img}}" alt="{{book.title}}"></a>
             <p><i>{{book.title}}</i></p>
             <p>By {{book.author}}</p>
@@ -45,6 +38,6 @@
         </div></a>
 		{% endfor %}
     </div>
-    <a href="javascript:history.back()">Go back</a>
+    <br><p class="back"><a href="javascript:history.back()"><img src="/backArrow.png" alt="back arrow">&nbsp;&nbsp;Go back</a></p>
 </body>
 </html>

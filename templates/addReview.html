@@ -7,15 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-    <ul class="nav">
-        <li><a href="/profile">Home</a></li>
-        <li>
-            <form action="/search">
-                <input type="text" id="search" name="search" placeholder="Search books">
-                <input type="submit" id="submit" name="submit" value="Search" hidden>
-            </form>
-        </li>
-    </ul>
+    {% include "navbar.html" %}
     <h2>Write Review for {{book.title}}</h2>
     <div class="flexBox">
         <a href="/book/{{book.isbn}}"><img src="{{book.img}}" alt="Book Cover Image"></a>
@@ -31,7 +23,7 @@
         </div>
     </div>
 
-    <a href="javascript:history.back()">Cancel</a>
+    <br><p class="back"><a href="javascript:history.back()"><img src="/cancelIcon.png" alt="cancel icon">&nbsp;&nbsp;Cancel</a></p>
 
 </body>
 </html>

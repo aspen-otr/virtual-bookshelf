@@ -7,16 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-    <ul class="nav">
-        <li><a href="/profile">Home</a></li>
-        <li>
-            <form action="/search">
-                <input type="text" id="search" name="search" placeholder="Search books">
-                <input type="submit" id="submit" name="submit" value="Search" hidden>
-            </form>
-        </li>
-    </ul>
-
+    {% include "navbar.html" %}
     <div class="flexBox">
         <h3>{{ user.display_name }}</h3>
         <input type="button" id="editUserBtn" name="editUserBtn" value="Edit User Profile">
@@ -62,14 +53,14 @@
 			{% for review_cons in reviews[0:3] %}
 			{% set book = review_cons.book %}
 			{% set rev = review_cons.review %}
-				<a href="/review" class="linkBox bookOnShelf"><div class="flexBox">
+				<div class="reviewBox">
 					<img src="{{book.img}}" alt="Book Cover Image">
 					<div class="inlineBox">
 						<p><i>{{ book.title }}</i> by {{ user.display_name }} ({{ rev.rating }})</p>
 						<p>{{ rev.tagline }}</p>
 						<p>{{ rev.content }}</p>
 					</div>
-				</div></a>
+				</div>
 			{% endfor %}
         </div>
     </div>
