@@ -85,7 +85,6 @@ def search_page():
             return flask.redirect(f"/profile/{u}")
         return flask.redirect("/login")
     results = db_layer.search_books(terms)
-    print(results[0])
     if len(results) == 1:
         return flask.redirect(f"/book/{results[0]['isbn']}")
     return flask.render_template("search.html",
