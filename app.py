@@ -6,9 +6,6 @@ import db_layer
 
 app = Flask(__name__, static_folder = "/")
 
-# Magic numbers I guess (HTTP response codes mostly?/)
-KEEP_HTTP_METHOD = 307
-
 def logged_in():
     return request.cookies.get("user")
 
