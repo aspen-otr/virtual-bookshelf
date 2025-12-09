@@ -13,7 +13,7 @@
 	  {% if search_results %}
 		{% for result in search_results %}
 			<div class="flexBox" style="width: 80vw">
-				<a href="/book/{{result.isbn}}"><img class="bookOnShelf" src="{{result.img}}" alt="{{result.title}}'s Cover Image"></a>
+				<a href="/book/{{result.isbn}}"><img class="bookOnShelf" src="{{result.img}}" alt="{{result.title}}"></a>
 				<div class="searchResultInfo">
 					<p id="title"><i>{{ result.title }}</i> by {{ result.author }}</p>
 					<p id="rating">Rating: {{ result.rating }}</p>
@@ -35,12 +35,14 @@
 								  { method: "POST" }).then(() => null);
 						});
 					</script>
-					<input type="button" id="reviewBtn{{result.isbn}}" name="reviewBtn" value="Review">
-					<script>
-						document.getElementById("reviewBtn{{result.isbn}}").addEventListener("click", function(e){
-							document.location = "/addReview?isbn={{ result.isbn }}";
-						});
-					</script>
+					{% if can_review %}
+						<input type="button" id="reviewBtn{{result.isbn}}" name="reviewBtn" value="Review">
+						<script>
+							document.getElementById("reviewBtn{{result.isbn}}").addEventListener("click", function(e){
+								document.location = "/addReview?isbn={{ result.isbn }}";
+							});
+						</script>
+					{% endif %}
 				</div>
 			</div>
 		{% endfor %}

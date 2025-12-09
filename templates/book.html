@@ -10,7 +10,7 @@
     {% include "navbar.html" %}
     <h2>Book Details</h2>
     <div class="flexBox">
-        <img class="starBook" src="{{book.img}}" alt="Book Cover Image">
+        <img class="starBook" src="{{book.img}}" alt="{{book.title}}">
         <div>
             <p><i>{{ book.title }}</i></p>
             <p>By {{ book.author }}</p>

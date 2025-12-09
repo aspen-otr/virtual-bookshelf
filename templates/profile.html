@@ -54,7 +54,7 @@
 			{% set book = review_cons.book %}
 			{% set rev = review_cons.review %}
 				<div class="reviewBox">
-					<img src="{{book.img}}" alt="Book Cover Image">
+					<a href="/book/{{book.isbn}}"><img src="{{book.img}}" alt="{{book.title}}"></a>
 					<div class="inlineBox">
 						<p><i>{{ book.title }}</i> by {{ user.display_name }} ({{ rev.rating }})</p>
 						<p>{{ rev.tagline }}</p>

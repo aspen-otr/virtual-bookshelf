@@ -10,7 +10,7 @@
     {% include "navbar.html" %}
     <h2>Write Review for {{book.title}}</h2>
     <div class="flexBox">
-        <a href="/book/{{book.isbn}}"><img src="{{book.img}}" alt="Book Cover Image"></a>
+        <a href="/book/{{book.isbn}}"><img src="{{book.img}}" alt="{{book.title}}"></a>
         <div class="inlineBox">
             <p><i>{{book.title}}</i> by {{book.author}}</p>
             <form action="/addReview?isbn={{book.isbn}}" method="post">

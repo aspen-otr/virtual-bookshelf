@@ -39,6 +39,9 @@ input[type=button], input[type=submit], select, button, .back{
     color: lightcyan !important;
 }
 
+.center{
+    text-align: center;
+}
 .bookshelfTop{
     width: 20vw;
     height: auto;
@@ -96,9 +99,8 @@ div{
     height: 100px;
 }
 img.starBook{
-    width: 40vw;
-    height: auto;
-    max-height: 90vw;
+    height: 60vh;
+    width: auto;
     /* object-fit: contain; */
 }
 img{
