@@ -7,35 +7,27 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-    <ul class="nav">
-        <li><a href="/profile">Home</a></li>
-        <li>
-            <form action="/search">
-                <input type="text" id="search" name="search" placeholder="Search books">
-                <input type="submit" id="submit" name="submit" value="Search" hidden>
-            </form>
-        </li>
-    </ul>
+    {% include "navbar.html" %}
     <h2>Results</h2>
     <div>
 	  {% if search_results %}
 		{% for result in search_results %}
-			<div class="flexBox">
-				<a href="/book/{{result.isbn}}"><img class="bookOnShelf" src="{{result.img}}" alt="Book Cover Image"></a>
+			<div class="flexBox" style="width: 80vw">
+				<a href="/book/{{result.isbn}}"><img class="bookOnShelf" src="{{result.img}}" alt="{{result.title}}'s Cover Image"></a>
 				<div class="searchResultInfo">
-					<div id="title"><i>{{ result.title }}</i> by {{ result.author }}</div>
-					<div id="rating">Rating: {{ result.rating }}</div>
-					<div id="genres">Genres: {{ result.genre }}</div>
-					<div id="ISBN">ISBN: {{ result.isbn }}</div>
-					<div id="link">Goodreads link: {{ result.link }}</div>
+					<p id="title"><i>{{ result.title }}</i> by {{ result.author }}</p>
+					<p id="rating">Rating: {{ result.rating }}</p>
+					<p id="genres">Genres: {{ result.genre.replace(",", ", ") }}</p>
+					<P id="ISBN">ISBN: {{ result.isbn }}</p>
+					<p id="link"><a href={{ result.link }}>Goodreads link</a></a></p>
 				</div>
-				<div class="searchResultInfo">
-					<input type="button" id="addToShelfBtn{{result.isbn}}" name="addToShelfBtn" value="Add to:">
+				<div class="inlineBox" style="display: block;">
+					<input type="button" id="addToShelfBtn{{result.isbn}}" name="addToShelfBtn" value="Add to:"><br>
 					<select id="addToShelfSelectBtn{{result.isbn}}" name="addToShelfSelectBtn">
 					{% for shelf in user_shelves %}
 						<option value="{{ shelf.id }}">{{ shelf.name }}</option>
 					{% endfor %}
-					</select>
+					</select><br>
 					<script>
 						document.getElementById("addToShelfBtn{{result.isbn}}").addEventListener("click", function(e){
 							const shelf_id = document.getElementById("addToShelfSelectBtn{{ result.isbn }}").value;

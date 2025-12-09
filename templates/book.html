@@ -7,15 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-    <ul class="nav">
-        <li><a href="/profile">Home</a></li>
-        <li>
-            <form action="/search">
-                <input type="text" id="search" name="search" placeholder="Search books">
-                <input type="submit" id="submit" name="submit" value="Search" hidden>
-            </form>
-        </li>
-    </ul>
+    {% include "navbar.html" %}
     <h2>Book Details</h2>
     <div class="flexBox">
         <img class="starBook" src="{{book.img}}" alt="Book Cover Image">
@@ -25,7 +17,7 @@
             <p>Rating: {{ book.rating }}</p>
             <p>Genres: {{ genres }}</p>
             <p>ISBN: {{ book.isbn }}</p>
-            <p>Goodreads link: {{ book.link }}</p>
+			<p id="link"><a href={{ book.link }}>Goodreads link</a></p>
         </div>
     </div>
 	{% if can_review %}
@@ -58,6 +50,6 @@
 		<p>{{ review.content }}</p>
 		</div>
 	{% endfor %}
-    <p><a href="javascript:history.back()">Go back</a></p>
+    <br><p class="back"><a href="javascript:history.back()"><img src="/backArrow.png" alt="back arrow">&nbsp;&nbsp;Go back</a></p>
 </body>
 </html>

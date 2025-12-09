@@ -1,17 +1,59 @@
 body{
-    background-color: cornsilk;
+    background-color: lightcyan;
+    padding: 40px 10px 10px 10px;
 }
 .nav{
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: space-between;
+    list-style-type: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    display: flex;
+    align-items: center;
+    margin: 0px;
+    padding: 5px;
+    gap: 0px 20px;
+    background-color: mediumseagreen;
+}
+.nav img{
+    height: 30px;
+}
+.nav input{
+    height: 20px;
+}
+.back{
+    display: inline-block;
+    padding: 5px;
+    gap: 5px;
+}
+.back img{
+    height: 30px;
+}
+.back a{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+input[type=button], input[type=submit], select, button, .back{
+    background-color: mediumseagreen !important;
+    color: lightcyan !important;
 }
 
+.bookshelfTop{
+    width: 20vw;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -40px;
+}
+
+div{
+    padding: 20px;
+}
 .flexBox{
     display: flex;
-	padding: 20px;
+    gap: 5px;
 }
 .inlineBox{
     display: inline;
@@ -24,17 +66,24 @@ body{
     display: flex;
 }
 .shelfBox{
-    flex: 1 0 250px;
+    flex: 1 0 100px;
+    max-width: 300px;
 }
 .smallShelf, .shelf{
     display: flex;
-    flex-wrap: wrap;
 }
 .smallShelf img{
-    height: 100px;
+    width: 100px;
 }
 .reviewBox{
-    flex: .2 0 300px;
+    display: flex;
+    flex: 0 1 200px;
+}
+.reviewBox img{
+    min-width: 100px;
+    max-width: 30vw;
+    height: auto;
+    object-fit: contain;
 }
 .bookOnShelf{
     text-align: center;
@@ -43,7 +92,10 @@ body{
     height: 100px;
 }
 img.starBook{
-    height: 400px;
+    width: 40vw;
+    height: auto;
+    max-height: 90vw;
+    /* object-fit: contain; */
 }
 img{
     height: 100px;
@@ -55,7 +107,5 @@ a.linkBox{
 .searchResultInfo{
     display: flex;
     flex-wrap: wrap;
-    padding: 10px;
-    margin: 10px;
     column-gap: 20px;
 }

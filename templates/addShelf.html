@@ -7,21 +7,13 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-    <ul class="nav">
-        <li><a href="/profile">Home</a></li>
-        <li>
-            <form action="/search">
-                <input type="text" id="search" name="search" placeholder="Search books">
-                <input type="submit" id="submit" name="submit" value="Search" hidden>
-            </form>
-        </li>
-    </ul>
+    {% include "navbar.html" %}
     <h2>Add Shelf</h2>
     <form action="/addShelf" method="post">
         <input type="text" id="shelfName" name="shelfName" placeholder="Enter shelf name here" maxlength="50" required><br>
         <textarea id="shelfDescription" name="shelfDescription" placeholder="Enter description here" maxlength="300" rows="3" cols="30"></textarea>
         <input type="submit" id="submit" name="submit">
     </form>
-    <a href="/profile">Cancel</a>
+    <br><p class="back"><a href="/profile"><img src="/cancelIcon.png" alt="cancel icon">&nbsp;&nbsp;Cancel</a></p>
 </body>
 </html>
