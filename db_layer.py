@@ -3,11 +3,11 @@ from contextlib import contextmanager
 from hashlib import sha1
 
 conf = {
-    "user": "polstera20",
-    "password": "ap6958",
-    "host": "washington.uww.edu", 
-    "database": "cs366-2257_polstera20",
-    "port": 3306 # Default MariaDB port
+    "user": "aspen",
+    "password": "aspen",
+    "host": "localhost",
+    "port": 3306,
+    "database": "cs366"
 }
 
 @contextmanager
