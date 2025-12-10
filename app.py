@@ -197,4 +197,5 @@ def edit_user_page():
     return resp
 
 if __name__ == "__main__":
+    db_layer.load_procs()
     app.run(debug = True)

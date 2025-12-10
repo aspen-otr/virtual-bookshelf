@@ -22,11 +22,88 @@ def db_cur(**kwargs): # Supply with db_cur(conf = { ... })
         conn.commit()
         conn.close()
 
-def db_exec(func, *args, **kwargs):
-    res = None
+def load_procs():
+    procs = [
+        """
+        CREATE PROCEDURE IF NOT EXISTS DeleteShelf(IN gid INT)
+        BEGIN
+        DELETE FROM Shelf WHERE id = gid;
+        DELETE FROM Own WHERE id = gid;
+        DELETE FROM OnShelf WHERE id = gid;
+        END
+        """,
+        # Auto-aborts before running more username-altering goings-on.
+        """
+        CREATE PROCEDECURE IF NOT EXISTS UpdateUser
+        (IN cur VARCHAR(20) NOT NULL, IN uname VARCHAR(20),
+            IN dname VARCHAR(40), IN hash VARCHAR(40))
+        BEGIN
+        IF dname IS NOT NULL THEN
+        UPDATE User
+        SET display_name = dname
+        WHERE username = cur;
+        END IF;
+
+        IF hash IS NOT NULL THEN
+        UPDATE User
+        SET hashed_password = hash
+        WHERE username = cur;
+        END IF;
+
+        IF uname IS NOT NULL THEN
+        UPDATE User
+        SET username = uname
+        WHERE username = cur;
+
+        UPDATE Own
+        SET username = uname
+        WHERE username = cur;
+
+        UPDATE Review
+        SET username = uname
+        WHERE username = cur;
+
+        END IF;
+        END
+        """,
+        """
+        CREATE PROCEDURE IF NOT EXISTS DeleteUser(IN uname VARCHAR(20) NOT NULL)
+        BEGIN
+
+        DELETE FROM User WHERE username = uname;
+
+        DECLARE cur CURSOR FOR
+        SELECT id
+        FROM Shelf NATURAL JOIN Own
+        WHERE username = uname;
+
+        DECLARE @done BOOLEAN DEFAULT false;
+        DECLARE @shelf INT DEFAULT 0;
+        DECLARE CONTINUE HANDLER FOR NOT FOUND SET @done = true;
+
+        OPEN cur;
+        
+        del_shelf: LOOP
+
+        IF @done = true THEN
+        LEAVE del_shelf;
+        END IF;
+
+        CALL DeleteShelf(@shelf);
+
+        END LOOP;
+
+        CLOSE cur;
+
+        DELETE FROM Review
+        WHERE username = uname;
+
+        END
+        """
+    ]
     with db_cur() as cur:
-        res = func(cur, *args)
-    return res
+        for proc in procs:
+            cur.execute(proc)
 
 # Fetching
 def user_info(username):
@@ -175,16 +252,11 @@ def register_user(username, display_name, password):
 
 def delete_shelf(shelf_id):
     with db_cur() as cur:
-        cur.execute("DELETE FROM Own WHERE id = ?", (shelf_id,))
-        cur.execute("DELETE FROM OnShelf WHERE id = ?", (shelf_id,))
-        cur.execute("DELETE FROM Shelf WHERE id = ?", (shelf_id,))
+        cur.callproc('DeleteShelf', [shelf_id])
 
 def delete_user(username):
-    for shelf in shelves_owned_by(username):
-        delete_shelf(shelf["id"])
     with db_cur() as cur:
-        cur.execute("DELETE FROM Review WHERE username = ?", (username,))
-        cur.execute("DELETE FROM User WHERE username = ?", (username,))
+        cur.callproc('DeleteUser', [username])
 
 def add_review(isbn, username, tagline, content, rating):
     with db_cur() as cur:
@@ -192,17 +264,15 @@ def add_review(isbn, username, tagline, content, rating):
                     (isbn, username, tagline, content, rating))
 
 def update_user_info(old_name, username, display_name, password):
-    if password is None:
-        password = user_info(old_name)["hashed_password"]
-    else:
+    if password is not None:
         password = hash_password(password)
 
     with db_cur() as cur:
-        cur.execute("UPDATE User SET display_name = ?, hashed_password = ? WHERE username = ?", (display_name, password, old_name))
-        if old_name != username:
-            cur.execute("UPDATE User SET username = ? WHERE username = ?", (username, old_name))
-            cur.execute("UPDATE Review SET username = ? WHERE username = ?", (username, old_name))
-            cur.execute("UPDATE Own SET username = ? WHERE username = ?", (username, old_name))
+        cur.callproc('UpdateUser',
+                     [old_name,
+                      username or None,
+                      display_name or None,
+                      password or None])
 
 # Extraneous utilities
 def hash_password(plaintext):
